@@ -1,2 +1,8 @@
+# Folder
+.idea
+.vscode
+cmake-build-debug
 build
+
+# Binary
 neo-neofetch
