@@ -15,7 +15,7 @@ char *fetch_cpu(void);
 
 char *fetch_shell(bool full_path);
 
-char *fetch_cpu(void);
+char *fetch_term(bool prefix);
 
 typedef enum {
     NONE,

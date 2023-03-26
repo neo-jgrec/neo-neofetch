@@ -23,6 +23,7 @@ char *fetch_cpu(void)
             if (!cpu)
                 return NULL;
             strcpy(cpu, line + 13);
+            cpu[strlen(cpu) - 1] = '\0';
             break;
         }
     }

@@ -1,3 +1,3 @@
 add_library( fetch
             cpu.c
-        shell.c)
+        shell.c term.c)
