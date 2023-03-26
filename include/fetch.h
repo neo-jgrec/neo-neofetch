@@ -16,4 +16,6 @@ char *fetch_shell(bool full_path);
 
 char *fetch_term(bool prefix);
 
+char *fetch_hostname(void);
+
 #endif /* !FETCH_H_ */
