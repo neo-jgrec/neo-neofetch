@@ -5,25 +5,34 @@
 */
 
 #include <malloc.h>
+#include <ncurses.h>
+#include <string.h>
 
 #include "neofetch.h"
 
-int main(void)
+int main()
 {
-    char *cpu = fetch_cpu();
-    char *shell = fetch_shell(false);
-    char *term = fetch_term(false);
+    initscr();
+    start_color();
+    init_pair(1, COLOR_WHITE, COLOR_BLACK);
+    attron(COLOR_PAIR(1));
 
-    if (!cpu)
-        return 84;
-    printf("CPU: %s\n", cpu);
-    if (!shell)
-        return 84;
-    printf("Shell: %s\n", shell);
-    if (!term)
-        return 84;
-    printf("Terminal: %s\n", term);
-    free(cpu);
-    free(shell);
+    move(0, (COLS / 1.2) - strlen("CPU: ") - strlen(fetch_cpu()) / 2);
+    printw("CPU: %s", fetch_cpu());
+
+    move(1, (COLS / 1.2) - strlen("Shell: ") - strlen(fetch_shell(false)) / 2);
+    printw("Shell: %s", fetch_shell(false));
+
+    move(2, (COLS / 1.2) - strlen("Terminal: ") - strlen(fetch_term(false)) / 2);
+    printw("Terminal: %s", fetch_term(false));
+
+    refresh();
+    getch();
+
+    leaveok(stdscr, TRUE);
+    endwin();
+    refresh();
+    reset_shell_mode();
+
     return 0;
 }
