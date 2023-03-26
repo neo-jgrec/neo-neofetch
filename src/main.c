@@ -4,11 +4,17 @@
 ** main
 */
 
+#include <malloc.h>
+
 #include "neofetch.h"
 
 int main(void)
 {
-    printf("Hello World\n");
-    printf("CPU: %s", fetch_cpu());
+    char *cpu = fetch_cpu();
+
+    if (!cpu)
+        return 84;
+    printf("CPU: %s", cpu);
+    free(cpu);
     return 0;
 }

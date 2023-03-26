@@ -5,23 +5,24 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
+#include <stdlib.h>
 
 char *fetch_cpu(void)
 {
-    char *cpu = malloc(sizeof(char) * 100);
     FILE *fp = fopen("/proc/cpuinfo", "r");
+    char *cpu = NULL;
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
 
-    if (fp == NULL)
+    if (!fp)
         return NULL;
-    while ((read = getline(&line, &len, fp)) != -1) {
-        if (strstr(line, "model name") != NULL) {
-            strcpy(cpu, line);
+    while (getline(&line, &len, fp) != -1) {
+        if (strstr(line, "model name")) {
+            cpu = malloc(sizeof(char) * (strlen(line) - 12));
+            if (!cpu)
+                return NULL;
+            strcpy(cpu, line + 13);
             break;
         }
     }
