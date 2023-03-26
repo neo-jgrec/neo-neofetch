@@ -1,3 +1,4 @@
+#!/bin/bash
 ##
 ## neo-neofetch
 ## File description:
