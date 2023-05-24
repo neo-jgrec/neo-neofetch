@@ -21,4 +21,6 @@ char *fetch_uptime(void);
 
 char *fetch_osname(void);
 
+char *fetch_resolution(void);
+
 #endif /* !FETCH_H_ */
