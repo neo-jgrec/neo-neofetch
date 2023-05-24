@@ -16,19 +16,18 @@ char *fetch_cpu(void)
     size_t len = 0;
 
     if (!fp)
-        return NULL;
-    while (getline(&line, &len, fp) != -1) {
-        if (strstr(line, "model name")) {
-            cpu = malloc(sizeof(char) * (strlen(line) - 12));
-            if (!cpu)
-                return NULL;
-            strcpy(cpu, line + 13);
-            cpu[strlen(cpu) - 1] = '\0';
-            break;
-        }
+        exit(84);
+    while (!cpu && getline(&line, &len, fp) != -1) {
+        if (!strstr(line, "model name"))
+            continue;
+        cpu = malloc(sizeof(char) * (strlen(line) - 12));
+        if (!cpu)
+            exit(84);
+        strcpy(cpu, line + 13);
+        cpu[strlen(cpu) - 1] = '\0';
     }
-    fclose(fp);
-    if (line)
-        free(line);
+    if (fclose(fp) == EOF || !cpu || !line)
+        exit(84);
+    free(line);
     return cpu;
 }
