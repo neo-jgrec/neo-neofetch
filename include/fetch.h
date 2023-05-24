@@ -18,4 +18,6 @@ char *fetch_term(bool prefix);
 
 char *fetch_hostname(void);
 
+char *fetch_uptime(void);
+
 #endif /* !FETCH_H_ */
