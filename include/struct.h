@@ -1,5 +1,4 @@
 /*
-** EPITECH PROJECT, 2023
 ** neo-neofetch
 ** File description:
 ** struct.h
