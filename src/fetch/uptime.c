@@ -7,6 +7,7 @@
 #include <malloc.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 static void display_format(char *uptime, uint64_t seconds)
 {
@@ -20,8 +21,10 @@ static void display_format(char *uptime, uint64_t seconds)
         format = (seconds / 60 % 60 == 1) ? "%d minute " : "%d minutes ";
         sprintf(uptime + strlen(uptime), format, seconds / 60 % 60);
     }
-    format = (seconds % 60 == 1) ? "%d second " : "%d seconds ";
-    sprintf(uptime + strlen(uptime), format, seconds % 60);
+    if (seconds % 60) {
+        format = (seconds % 60 == 1) ? "%d second " : "%d seconds ";
+        sprintf(uptime + strlen(uptime), format, seconds % 60);
+    }
 }
 
 char *fetch_uptime(void)
@@ -31,12 +34,13 @@ char *fetch_uptime(void)
     uint64_t seconds;
     char *uptime = malloc(sizeof(char) * 256);
 
-    if (!fgets(buffer, BUFSIZ, file))
-        return NULL;
+    if (!uptime || !fgets(buffer, BUFSIZ, file))
+        exit(84);
+    uptime[0] = '\0';
     sscanf(buffer, "%zu", &seconds);
     display_format(uptime, seconds);
-    if (!uptime)
-        return NULL;
     uptime[strlen(uptime) - 1] = '\0';
-    return (fclose(file) == EOF) ? NULL : uptime;
+    if (fclose(file) == EOF)
+        exit(84);
+    return uptime;
 }
