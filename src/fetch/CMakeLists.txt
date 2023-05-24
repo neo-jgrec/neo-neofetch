@@ -3,4 +3,4 @@ add_library(fetch
         shell.c
         term.c
         hostname.c
-        uptime.c)
+        uptime.c osname.c)

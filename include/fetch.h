@@ -19,4 +19,6 @@ char *fetch_hostname(void);
 
 char *fetch_uptime(void);
 
+char *fetch_osname(void);
+
 #endif /* !FETCH_H_ */
