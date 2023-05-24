@@ -11,16 +11,13 @@
 char *fetch_term(bool prefix)
 {
     char *term = getenv("TERM");
-    char *term_name = NULL;
+    char *term_name;
 
     if (!term)
-        return NULL;
+        exit(84);
     term_name = malloc(sizeof(char) * (strlen(term) + 1));
     if (!term_name)
-        return NULL;
-    if (prefix)
-        strcpy(term_name, term);
-    else
-        strcpy(term_name, term + 6);
+        exit(84);
+    strcpy(term_name, (prefix) ? term : term + 6);
     return term_name;
 }

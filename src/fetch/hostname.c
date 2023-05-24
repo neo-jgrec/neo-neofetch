@@ -5,15 +5,13 @@
 */
 
 #include <unistd.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 char *fetch_hostname(void)
 {
     char *hostname = malloc(sizeof(char) * 256);
 
-    if (!hostname)
-        return NULL;
-    if (gethostname(hostname, 256) == -1)
-        return NULL;
+    if (!hostname || gethostname(hostname, 256) == -1)
+        exit(84);
     return hostname;
 }

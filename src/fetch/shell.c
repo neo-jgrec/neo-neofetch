@@ -15,13 +15,10 @@ char *fetch_shell(bool full_path)
     char *shell;
 
     if (!env_shell)
-        return NULL;
+        exit(84);
     shell = malloc(sizeof(char) * (strlen(env_shell) + 1));
     if (!shell)
-        return NULL;
-    if (full_path)
-        strcpy(shell, env_shell);
-    else
-        strcpy(shell, basename(env_shell));
+        exit(84);
+    strcpy(shell, (full_path) ? env_shell : basename(env_shell));
     return shell;
 }
