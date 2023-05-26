@@ -51,7 +51,8 @@ char *get_variable(const char *filepath, const char *searched_variable)
     free(hidden_file);
     for (; getline(&line, &len, fp) != -1;) {
         line[strlen(line)] = '\0';
-        if (!strstr(line, searched_variable))
+        if (strncmp(line, searched_variable, strlen(searched_variable)) ||
+            line[strlen(searched_variable)] != ':')
             continue;
         variable = extract_variable(line, searched_variable);
         free(line);
