@@ -21,5 +21,5 @@ char *fetch_resolution(void)
     if (system(cmd) == -1)
         exit(84);
     free(cmd);
-    return get_variable("resolution");
+    return get_variable(HIDDEN_FILE, "resolution");
 }

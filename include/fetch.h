@@ -23,4 +23,6 @@ char *fetch_osname(void);
 
 char *fetch_resolution(void);
 
+char *fetch_memory(bool percent);
+
 #endif /* !FETCH_H_ */

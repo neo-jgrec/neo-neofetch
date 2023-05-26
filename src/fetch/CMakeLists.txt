@@ -6,4 +6,5 @@ add_library( fetch STATIC
             uptime.c
             osname.c
             resolution.c
+            memory.c
 )

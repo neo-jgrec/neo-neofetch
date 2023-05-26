@@ -11,6 +11,6 @@ char *get_filepath(char *file);
 
 void clear_variable(void);
 
-char *get_variable(const char *variable);
+char *get_variable(const char *filepath, const char *variable);
 
 #endif /* !PARSE_H_ */
