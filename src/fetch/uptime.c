@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "neofetch.h"
+
 static void display_format(char *uptime, uint64_t seconds)
 {
     char *format;
@@ -27,7 +29,7 @@ static void display_format(char *uptime, uint64_t seconds)
     }
 }
 
-char *fetch_uptime(void)
+char *fetch_uptime(UNUSED context_t *ctx)
 {
     FILE *file = fopen("/proc/uptime", "r");
     char buffer[BUFSIZ];

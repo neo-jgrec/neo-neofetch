@@ -7,7 +7,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char *fetch_hostname(void)
+#include "neofetch.h"
+
+char *fetch_hostname(UNUSED context_t *ctx)
 {
     char *hostname = malloc(sizeof(char) * 256);
 

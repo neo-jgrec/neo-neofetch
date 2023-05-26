@@ -8,7 +8,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-char *fetch_cpu(void)
+#include "neofetch.h"
+
+char *fetch_cpu(UNUSED context_t *ctx)
 {
     FILE *fp = fopen("/proc/cpuinfo", "r");
     char *cpu = NULL;

@@ -9,20 +9,39 @@
 
     #include <stdbool.h>
 
-char *fetch_cpu(void);
+    #define UNUSED __attribute__((unused))
 
-char *fetch_shell(bool full_path);
+typedef struct context_s {
+    bool shell_fullpath;
+    bool terminal_prefix;
+    bool memory_percent;
+} context_t;
 
-char *fetch_term(bool prefix);
+char *fetch_cpu(context_t *ctx);
+char *fetch_shell(context_t *ctx);
+char *fetch_terminal(context_t *ctx);
+char *fetch_hostname(context_t *ctx);
+char *fetch_uptime(context_t *ctx);
+char *fetch_osname(context_t *ctx);
+char *fetch_resolution(context_t *ctx);
+char *fetch_memory(context_t *ctx);
 
-char *fetch_hostname(void);
+typedef struct fetch_s {
+    char *name;
+    char *(*fetch)(context_t *ctx);
+    bool enabled;
+} fetch_t;
 
-char *fetch_uptime(void);
-
-char *fetch_osname(void);
-
-char *fetch_resolution(void);
-
-char *fetch_memory(bool percent);
+static const fetch_t static_fetch[] = {
+    {"hostname", fetch_hostname},
+    {"cpu", fetch_cpu},
+    {"uptime", fetch_uptime},
+    {"shell", fetch_shell},
+    {"terminal", fetch_terminal},
+    {"osname", fetch_osname},
+    {"resolution", fetch_resolution},
+    {"memory", fetch_memory},
+    {NULL, NULL}
+};
 
 #endif /* !FETCH_H_ */

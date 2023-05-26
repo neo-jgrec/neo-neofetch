@@ -8,7 +8,9 @@
 #include <string.h>
 #include <sys/utsname.h>
 
-char *fetch_osname(void)
+#include "neofetch.h"
+
+char *fetch_osname(UNUSED context_t *ctx)
 {
     struct utsname utsname;
     char *osname = calloc(256, sizeof(char));

@@ -13,7 +13,7 @@
 
 #include "neofetch.h"
 
-char *fetch_memory(bool percent)
+char *fetch_memory(context_t *ctx)
 {
     char *memtotal = get_variable("/proc/meminfo", "MemTotal");
     char *memavailable = get_variable("/proc/meminfo", "MemAvailable");
@@ -25,7 +25,7 @@ char *fetch_memory(bool percent)
 
     if (!memtotal || !memavailable)
         exit(84);
-    if (percent)
+    if (ctx->memory_percent)
         sprintf(memory_percent, " (%d%%)", memused_int * 100 / memtotal_int);
     if (asprintf(&memory, "%dMiB / %dMiB%s",
         memused_int / 1024, memtotal_int / 1024, memory_percent) == -1)

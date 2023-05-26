@@ -38,17 +38,19 @@ static char *alloc_string(const char *ref_string)
 
 char *get_variable(const char *filepath, const char *searched_variable)
 {
-    char *hidden_file = (filepath[0] == '$') ? get_filepath(HIDDEN_FILE) :
+    char *hidden_file = (filepath[0] == '$') ? get_filepath(filepath) :
         alloc_string(filepath);
     FILE *fp = fopen(hidden_file, "r");
     char *variable = NULL;
+    char *line = NULL;
     size_t len = 0;
     struct stat st;
 
     if (!fp || stat(hidden_file, &st) == -1)
         exit(84);
     free(hidden_file);
-    for (char *line = NULL; getline(&line, &len, fp) != -1;) {
+    for (; getline(&line, &len, fp) != -1;) {
+        line[strlen(line)] = '\0';
         if (!strstr(line, searched_variable))
             continue;
         variable = extract_variable(line, searched_variable);
@@ -57,5 +59,9 @@ char *get_variable(const char *filepath, const char *searched_variable)
             exit(84);
         return variable;
     }
+    if (line)
+        free(line);
+    if (fclose(fp) == EOF)
+        exit(84);
     return alloc_string("null");
 }

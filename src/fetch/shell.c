@@ -7,9 +7,10 @@
 #include <stdlib.h>
 #include <libgen.h>
 #include <string.h>
-#include <stdbool.h>
 
-char *fetch_shell(bool full_path)
+#include "neofetch.h"
+
+char *fetch_shell(context_t *ctx)
 {
     char *env_shell = getenv("SHELL");
     char *shell;
@@ -19,6 +20,6 @@ char *fetch_shell(bool full_path)
     shell = malloc(sizeof(char) * (strlen(env_shell) + 1));
     if (!shell)
         exit(84);
-    strcpy(shell, (full_path) ? env_shell : basename(env_shell));
+    strcpy(shell, (ctx->shell_fullpath) ? env_shell : basename(env_shell));
     return shell;
 }

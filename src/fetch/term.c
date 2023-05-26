@@ -8,7 +8,9 @@
 #include <string.h>
 #include <stdbool.h>
 
-char *fetch_term(bool prefix)
+#include "neofetch.h"
+
+char *fetch_terminal(context_t *ctx)
 {
     char *term = getenv("TERM");
     char *term_name;
@@ -18,6 +20,6 @@ char *fetch_term(bool prefix)
     term_name = malloc(sizeof(char) * (strlen(term) + 1));
     if (!term_name)
         exit(84);
-    strcpy(term_name, (prefix) ? term : term + 6);
+    strcpy(term_name, (ctx->terminal_prefix) ? term : term + 6);
     return term_name;
 }

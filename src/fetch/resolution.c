@@ -9,7 +9,7 @@
 
 #include "neofetch.h"
 
-char *fetch_resolution(void)
+char *fetch_resolution(UNUSED context_t *ctx)
 {
     char *cmd = calloc(100, sizeof(char));
 
