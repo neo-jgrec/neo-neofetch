@@ -11,6 +11,9 @@
     #include "parse.h"
     #include "struct.h"
 
-    #define HIDDEN_FILE "$HOME/.neo_neofetch"
+    #define HIDDEN_FILE "$HOME/.neo_neofetch_tmp"
+    #define CONFIG_FILE "$HOME/.config/neo_neofetch/config"
+
+    #define IS_SKIP(x) (x == ' ' || x == '\t')
 
 #endif /* !NEOFETCH_H_ */

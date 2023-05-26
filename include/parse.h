@@ -7,7 +7,7 @@
 #ifndef PARSE_H_
     #define PARSE_H_
 
-char *get_hidden_file_name(void);
+char *get_filepath(char *file);
 
 void clear_variable(void);
 

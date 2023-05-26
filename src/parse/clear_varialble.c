@@ -11,8 +11,10 @@
 
 void clear_variable(void)
 {
-    FILE *file = fopen(get_hidden_file_name(), "w");
+    char *hidden_file = get_filepath(HIDDEN_FILE);
+    FILE *file = fopen(hidden_file, "w");
 
+    free(hidden_file);
     if (!file || fclose(file) == EOF)
         exit(84);
 }

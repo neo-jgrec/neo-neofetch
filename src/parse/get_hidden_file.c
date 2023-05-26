@@ -9,7 +9,7 @@
 
 #include "neofetch.h"
 
-char *get_hidden_file_name(void)
+char *get_filepath(char *file)
 {
     char *home = getenv("HOME");
     char *hidden_file = malloc(sizeof(char) * 100);
@@ -17,6 +17,6 @@ char *get_hidden_file_name(void)
     if (!hidden_file || !home)
         exit(84);
     strcpy(hidden_file, home);
-    strcat(hidden_file, HIDDEN_FILE + strlen("$HOME"));
+    strcat(hidden_file, file + strlen("$HOME"));
     return hidden_file;
 }

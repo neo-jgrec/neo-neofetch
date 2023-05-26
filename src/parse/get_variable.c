@@ -11,25 +11,39 @@
 
 #include "neofetch.h"
 
-char *get_variable(const char *variable)
+static char *extract_variable(char *line, const char *searched_variable)
 {
-    char *hidden_file = get_hidden_file_name();
+    u_int32_t skip = strlen(searched_variable) + 2;
+    char *variable;
+
+    for (; line[skip] && IS_SKIP(skip); skip++);
+    variable = malloc(sizeof(char) * (strlen(line + skip) + 1));
+    if (!variable)
+        exit(84);
+    strcpy(variable, line + skip);
+    variable[strlen(line + skip) - 1] = '\0';
+    return variable;
+}
+
+char *get_variable(const char *searched_variable)
+{
+    char *hidden_file = get_filepath(HIDDEN_FILE);
     FILE *fp = fopen(hidden_file, "r");
-    char *resolution = malloc(sizeof(char) * 20);
-    char *line = NULL;
+    char *variable = NULL;
     size_t len = 0;
     struct stat st;
 
-    if (!resolution || !fp || stat(hidden_file, &st) == -1)
+    if (!fp || stat(hidden_file, &st) == -1)
         exit(84);
-    while (getline(&line, &len, fp) != -1) {
-        if (!strstr(line, variable))
+    free(hidden_file);
+    for (char *line = NULL; getline(&line, &len, fp) != -1;) {
+        if (!strstr(line, searched_variable))
             continue;
-        strcpy(resolution, line + strlen(variable) + 2);
-        resolution[strlen(resolution) - 1] = '\0';
+        variable = extract_variable(line, searched_variable);
+        free(line);
         if (fclose(fp) == EOF)
             exit(84);
-        return resolution;
+        return variable;
     }
     exit(84);
 }
