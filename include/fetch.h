@@ -7,6 +7,7 @@
 #ifndef FETCH_H_
 	#define FETCH_H_
 
+    #include <stddef.h>
     #include <stdbool.h>
 
     #define UNUSED __attribute__((unused))
@@ -25,6 +26,11 @@ char *fetch_uptime(context_t *ctx);
 char *fetch_osname(context_t *ctx);
 char *fetch_resolution(context_t *ctx);
 char *fetch_memory(context_t *ctx);
+
+typedef struct option_s {
+    char *name;
+    bool *value;
+} option_t;
 
 typedef struct fetch_s {
     char *name;

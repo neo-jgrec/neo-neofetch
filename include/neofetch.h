@@ -16,4 +16,6 @@
 
     #define IS_SKIP(x) (x == ' ' || x == '\t')
 
+void run_config(void);
+
 #endif /* !NEOFETCH_H_ */
