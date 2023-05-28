@@ -28,9 +28,11 @@ If you want to parametrize `neo-neofetch` see for config inside the `$HOME/.conf
 
 Ich line of the config file is a parameter, the format is `<parameter>: <value>`.
 
-The value are `true` or `false`.
+The value are `true` or `false`, except for image.
 
 When the default value is not set, it is `true`.
+
+Image can only be displayed if your terminal supports it, (currently only kitty).
 
 | Parameter         | Description                        | Default value |
 |-------------------|------------------------------------|---------------|
@@ -45,3 +47,4 @@ When the default value is not set, it is `true`.
 | `resolution`      | Resolution to display              |               |
 | `memory`          | Memory to display                  |               |
 | `memory_percent`  | Display memory in percent          | `false`       |
+| `image`           | Image to display                   | `"<path>"`    |

@@ -4,9 +4,9 @@
 ** run_config.c
 */
 
-#include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include <curses.h>
 
 #include "neofetch.h"
 
@@ -44,20 +44,22 @@ static void clean_variable(char *variable)
     variable[i] = '\0';
 }
 
-static void set_value(context_t *ctx, fetch_t *fetch, option_t *options)
+static void set_value(context_t *ctx, fetch_t *fetch, option_t *options,
+    uint32_t offset)
 {
     char *variable;
     char *value;
+    uint32_t i;
 
     clear_variable();
-    for (int i = 0; options[i].name; i++) {
+    for (i = 0; options[i].name; i++) {
         value = get_variable(CONFIG_FILE, options[i].name);
         clean_variable(value);
         *options[i].value = !strcmp(value, "true");
         free(value);
     }
     free(options);
-    for (int i = 0; fetch[i].name; i++) {
+    for (i = 0; fetch[i].name; i++) {
         value = get_variable(CONFIG_FILE, fetch[i].name);
         clean_variable(value);
         fetch[i].enabled = strcmp(value, "false");
@@ -65,12 +67,15 @@ static void set_value(context_t *ctx, fetch_t *fetch, option_t *options)
         if (!fetch[i].enabled)
             continue;
         variable = fetch[i].fetch(ctx);
-        printf("%s: %s\n", fetch[i].name, variable);
+        printf("%*s%-9s%s   %s\n", offset, "", fetch[i].name, ":", variable);
         free(variable);
     }
+    if (offset > 1)
+        for (uint32_t j = 0; j <= HEIGHT - i; j++)
+            printf("\n");
 }
 
-void run_config(void)
+void run_config(uint32_t offset)
 {
     context_t *ctx = calloc(1, sizeof(context_t));
     fetch_t *fetch;
@@ -80,7 +85,7 @@ void run_config(void)
         exit(84);
     fetch = get_fetch();
     options = get_options(ctx);
-    set_value(ctx, fetch, options);
+    set_value(ctx, fetch, options, offset);
     free(fetch);
     free(ctx);
 }
